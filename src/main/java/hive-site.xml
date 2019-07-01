@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?><!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<configuration>
+  <property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>hdfs://hdfsCluster/hive/db</value>
+	</property>
+	<property>
+		<name>hive.metastore.local</name>
+		<value>true</value>
+	</property>
+	
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:mysql://node243:3306/hive?useSSL=false</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>com.mysql.jdbc.Driver</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>hive</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>hive</value>
+	</property>
+	
+	<property> 
+	  <name>hive.metastore.authorization.storage.checks</name>
+	  <value>false</value>  
+	</property>
+	
+	<!-- metastore 
+    <property>
+       <name>hive.metastore.uris</name>
+       <value>thrift://localhost:9083</value>
+    </property>
+    -->
+    <!-- server2 --> 
+    <property>
+       <name>hive.server2.thrift.port</name>
+       <value>10001</value>
+    </property>
+
+    <property>
+      <name>hive.server2.thrift.bind.host</name>
+      <value>node243</value>
+    </property>
+
+	<!-- mr engine  -->
+    <property>
+        <name>hive.execution.engine</name>
+        <value>mr</value>
+    </property> 
+
+    <!-- spark engine
+    <property>
+        <name>hive.enable.spark.execution.engine</name>
+        <value>true</value>
+    </property> -->
+
+    <!-- sparkcontext
+    <property>
+        <name>spark.master</name>
+        <value>yarn</value>
+    </property>
+    <property>
+        <name>spark.serializer</name>
+        <value>org.apache.spark.serializer.KryoSerializer</value>
+    </property>
+
+    <property>
+        <name>spark.executor.instances</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>spark.executor.cores</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>spark.executor.memory</name>
+        <value>1024m</value>
+    </property>
+    <property>
+        <name>spark.driver.cores</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>spark.driver.memory</name>
+        <value>1024m</value>
+    </property>
+    <property>
+        <name>spark.yarn.queue</name>
+        <value>default</value>
+    </property>
+    <property>
+        <name>spark.app.name</name>
+        <value>hive-app</value>
+    </property>
+ 
+    <property>
+        <name>hive.support.concurrency</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.enforce.bucketing</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.exec.dynamic.partition.mode</name>
+        <value>nonstrict</value>
+    </property>
+    <property>
+        <name>hive.txn.manager</name>
+        <value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
+    </property>
+    <property>
+        <name>hive.compactor.initiator.on</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.compactor.worker.threads</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>spark.executor.extraJavaOptions</name>
+        <value>-XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
+        </value>
+    </property>
+    -->
+	
+	<property>  
+	  <name>hive.server2.enable.doAs</name>
+	  <value>false</value>
+	</property>
+	
+	<property>
+		<name>hive.metastore.schema.verification</name>
+		<value>false</value>
+	</property>
+
+</configuration>

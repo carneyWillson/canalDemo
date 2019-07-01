@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.carney</groupId>
+    <artifactId>CanalDemo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- 声明公有的属性 -->
+    <properties>
+        <!-- 小工具 -->
+        <fastjson.version>1.2.47</fastjson.version>
+        <sclalikejdbc.version>2.5.0</sclalikejdbc.version>
+        <mysqljdbc.version>5.1.28</mysqljdbc.version>
+        <jedis.version>3.0.1</jedis.version>
+
+        <!-- 软件 -->
+        <scala.version>2.11.8</scala.version>
+        <spark.version>2.2.3</spark.version>
+        <hadoop.version>2.7.1</hadoop.version>
+        <hive.version>2.1.1</hive.version>
+
+        <!-- 打包相关 -->
+        <!--<scope.nopackage>provided</scope.nopackage>-->
+        <scope.nopackage>compile</scope.nopackage>
+        <maven.shade.version>2.4.3</maven.shade.version>
+        <scala.maven.version>4.0.2</scala.maven.version>
+        <maven.compiler.version>3.6.1</maven.compiler.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <encoding>UTF-8</encoding>
+    </properties>
+    <!-- 声明并引入公有的依赖 -->
+    <dependencies>
+
+        <!-- 解析json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- 用于操作mysql -->
+        <dependency>
+            <groupId>org.scalikejdbc</groupId>
+            <artifactId>scalikejdbc_2.11</artifactId>
+            <version>${sclalikejdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalikejdbc</groupId>
+            <artifactId>scalikejdbc-config_2.11</artifactId>
+            <version>${sclalikejdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysqljdbc.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+
+        <!-- scala -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+
+        <!-- spark组件 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+            <version>${spark.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>${spark.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>${spark.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.11</artifactId>
+            <version>${spark.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <!-- hadoop -->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+
+        <!-- hive -->
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>${hive.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-common</artifactId>
+            <version>${hive.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-service</artifactId>
+            <version>${hive.version}</version>
+            <scope>${scope.nopackage}</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- 配置构建信息 -->
+    <build>
+        <!-- 声明并引入构建的插件 -->
+        <plugins>
+            <!-- 打包依赖 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven.shade.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 开启自动精简, 删除无用依赖 -->
+                            <!--<minimizeJar>true</minimizeJar>-->
+                            <!-- 重命名包, 如果不开启, shade生成的jar包为默认包名, 默认生成的jar会被改名 -->
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>Shade</shadedClassifierName>
+                            <!-- 过滤掉重复依赖 -->
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>
+                                        META-INF/services/org.apache.spark.sql.sources.DataSourceRegister
+                                    </resource>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 配置打包时使用的jdk版本等 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- 打包时支持scala -->
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>${scala.maven.version}</version>
+                <executions>
+                    <execution>
+                        <!-- 打包/src/main下的类 -->
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <!-- 打包/src/test下的类 -->
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
