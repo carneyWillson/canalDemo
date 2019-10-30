@@ -18,7 +18,7 @@
 
         <!-- 软件 -->
         <scala.version>2.11.8</scala.version>
-        <spark.version>2.2.3</spark.version>
+        <spark.version>2.4.4</spark.version>
         <hadoop.version>2.7.1</hadoop.version>
         <hive.version>2.1.1</hive.version>
 
