@@ -11,7 +11,7 @@
     <!-- 声明公有的属性 -->
     <properties>
         <!-- 小工具 -->
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <sclalikejdbc.version>2.5.0</sclalikejdbc.version>
         <mysqljdbc.version>5.1.28</mysqljdbc.version>
         <jedis.version>3.0.1</jedis.version>
